@@ -1,0 +1,113 @@
+# 🎯 Membangun Workflow n8n: Microstock Automation
+
+## Langkah 1: Setup Credentials di n8n
+
+### A. Setup Google Sheets Credentials
+1. **Buka n8n**: `http://localhost:5678`
+2. **Buka Settings** (gear icon di sidebar)
+3. **Credentials** → **Add Credential**
+4. **Cari "Google"** → Pilih **"Google Service Account"**
+5. **Isi Form:**
+   - Name: `Google Sheets Microstock`
+   - Service Account Email: (dari file JSON yang didownload)
+   - Private Key: (copy dari file JSON, bagian "private_key")
+6. **Save**
+
+### B. Setup Gemini Pro Credentials  
+1. **Add Credential** lagi
+2. **Cari "HTTP"** → Pilih **"Header Auth"**
+3. **Isi Form:**
+   - Name: `Gemini Pro API`
+   - Header Name: `x-goog-api-key`
+   - Header Value: `YOUR_GEMINI_API_KEY`
+4. **Save**
+
+### C. Setup Telegram Credentials
+1. **Add Credential** lagi  
+2. **Cari "Telegram"** → Pilih **"Telegram Bot"**
+3. **Isi Form:**
+   - Name: `Telegram Microstock Bot`
+   - Access Token: `YOUR_BOT_TOKEN`
+4. **Save**
+
+---
+
+## Langkah 2: Buat Workflow Baru
+
+1. **New Workflow** (+ icon)
+2. **Rename workflow**: "Microstock Niche to Prompt Generator"
+
+---
+
+## Langkah 3: Tambah Node Pertama - Telegram Trigger
+
+### Node 1: Telegram Trigger
+1. **Drag node "Telegram Trigger"** ke canvas
+2. **Configuration:**
+   - Credential: pilih `Telegram Microstock Bot`
+   - Updates: `Message`
+   - Additional Fields → Command: kosongkan (untuk menerima semua pesan)
+3. **Save**
+
+### Test Node 1:
+- Klik **"Listen for Test Event"**
+- Kirim pesan ke bot Telegram: `teknologi AI`
+- Pastikan node menerima pesan
+- Klik **"Stop Listening"**
+
+---
+
+## Langkah 4: Tambah Node Gemini Processing
+
+### Node 2: HTTP Request (Gemini Pro)
+1. **Drag "HTTP Request"** ke canvas
+2. **Connect** dari Telegram Trigger
+3. **Configuration:**
+   - Method: `POST`
+   - URL: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent`
+   - Authentication: pilih `Gemini Pro API`
+   - Headers:
+     ```json
+     {
+       "Content-Type": "application/json"
+     }
+     ```
+   - Body (JSON):
+     ```json
+     {
+       "contents": [{
+         "parts": [{
+           "text": "{{ $node['Telegram Trigger'].json.message.text }}\n\n[TEMPLATE KONSEP AKAN DITAMBAHKAN DI SINI]"
+         }]
+       }],
+       "generationConfig": {
+         "temperature": 0.7,
+         "maxOutputTokens": 2048
+       }
+     }
+     ```
+
+### Template Prompt yang Akan Dimasukkan:
+```
+Kamu adalah seorang Creative Director, Fotografer Komersial berpengalaman, dan AI Artist.
+Tugasmu adalah menerjemahkan satu ide atau niche microstock menjadi konsep gambar bergaya foto yang:
+- kuat secara visual
+- memiliki nilai jual tinggi untuk pasar internasional  
+- dan tidak menggunakan gaya klise atau visual yang terlalu umum
+
+[SISANYA SESUAI TEMPLATE YANG SUDAH ADA]
+
+Niche: {{ $node['Telegram Trigger'].json.message.text }}
+
+Output dalam format JSON:
+{
+  "concepts": [
+    {
+      "title": "judul konsep",
+      "description": "deskripsi visual lengkap",
+      "composition": "komposisi dan lensa",
+      "lighting": "pencahayaan dan mood", 
+      "uniqueness": "elemen konseptual",
+      "location": "lokasi dan properti",
+      "has_human": true/false,
+      "comfyui_prompt
