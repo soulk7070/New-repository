@@ -1,0 +1,67 @@
+# 🤖 Setup Bot Telegram untuk Workflow
+
+## Langkah 1: Aktifkan Bot dan Dapatkan Chat ID
+
+1. **Start Bot Anda**
+   - Buka bot Telegram Anda
+   - Ketik `/start`
+   - Bot akan aktif
+
+2. **Dapatkan Chat ID** (untuk output notification)
+   - Kirim pesan apapun ke bot Anda
+   - Buka browser, buka URL ini (ganti TOKEN dengan bot token Anda):
+   ```
+   https://api.telegram.org/botYOUR_BOT_TOKEN/getUpdates
+   ```
+   - Cari bagian `"chat":{"id":` - angka setelahnya adalah Chat ID Anda
+   - Catat Chat ID ini (misal: 123456789)
+
+## Langkah 2: Test Bot Token
+
+Untuk memastikan bot token bekerja, test dengan URL ini:
+```
+https://api.telegram.org/botYOUR_BOT_TOKEN/getMe
+```
+
+Jika berhasil, akan muncul info bot dalam format JSON.
+
+## Yang Perlu Anda Catat:
+
+1. ✅ **Bot Token**: sudah ada
+2. ✅ **Chat ID**: (dapatkan dari langkah di atas)
+
+---
+
+# 📝 Template Prompt untuk Non-Manusia
+
+Karena belum ada template khusus non-manusia, saya buatkan berdasarkan template manusia yang sudah ada:
+
+## Template Konsep Visual Non-Manusia:
+
+```
+📸 Format Deskripsi Konsep Non-Manusia:
+
+1. Judul Konsep:
+(Nama pendek tapi menggugah. Relevan untuk pasar microstock.)
+
+2. Deskripsi Visual & Objek Utama:
+(Gambarkan scene dengan fokus pada objek, produk, atau landscape. Detail tekstur, warna, bentuk, dan interaksi antar elemen.)
+
+3. Komposisi & Pilihan Lensa:
+(Contoh: macro shot dengan 100mm untuk detail tekstur; wide landscape dengan 16mm untuk dramatic perspective)
+
+4. Pencahayaan & Suasana (Mood):
+(Contoh: soft diffused light untuk produk; dramatic side lighting untuk arsitektur)
+
+5. Elemen Konseptual & Keunikan:
+(Simbolisme visual, contrast, atau detail yang membuat gambar menonjol)
+
+6. Lokasi & Properti Kunci:
+(Setting, objek utama, dan elemen pendukung yang penting)
+```
+
+## Template Prompt ComfyUI Non-Manusia:
+
+```
+[Type of photo - e.g., Product Photo, Landscape Photo, Still Life, Architectural Photo] featuring [detailed object/scene description: textures, colors, forms, and spatial relationships] in [lighting condition]. Captured using a [camera model] and [lens model]. Conceptual Elements & Uniqueness: [symbolic elements, color harmony, geometric patterns, or artistic composition] to create visual impact. Set aperture to [f-stop] for [depth effect]. Frame using [composition technique]. Shutter speed [value] for [motion effect if any], white balance in [tone] to enhance [specific mood]. Additional visual elements: [shadows, reflections, textures, atmospheric effects].
+```
