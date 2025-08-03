@@ -1,0 +1,99 @@
+# 📊 Panduan Setup Google Sheets API untuk Pemula
+
+## Langkah 1: Buat Project di Google Cloud Console
+
+1. **Buka Google Cloud Console**
+   - Kunjungi: https://console.cloud.google.com/
+   - Login dengan akun Google Anda
+
+2. **Buat Project Baru**
+   - Klik "Select a project" di bagian atas
+   - Klik "NEW PROJECT"
+   - Nama project: `microstock-workflow`
+   - Klik "CREATE"
+
+## Langkah 2: Enable Google Sheets API
+
+1. **Cari Google Sheets API**
+   - Di search bar, ketik "Google Sheets API"
+   - Klik hasil pertama
+   - Klik tombol "ENABLE"
+
+2. **Enable Google Drive API** (diperlukan juga)
+   - Kembali ke search, ketik "Google Drive API"
+   - Klik dan "ENABLE"
+
+## Langkah 3: Buat Service Account
+
+1. **Buka Credentials**
+   - Di sidebar kiri, klik "Credentials"
+   - Klik "CREATE CREDENTIALS"
+   - Pilih "Service account"
+
+2. **Isi Detail Service Account**
+   - Service account name: `microstock-bot`
+   - Service account ID: otomatis terisi
+   - Klik "CREATE AND CONTINUE"
+
+3. **Set Role (Grant Access)**
+   - Setelah klik "CREATE AND CONTINUE", akan muncul halaman "Grant this service account access to project"
+   - Di dropdown "Select a role", ketik atau cari "Editor"
+   - Pilih "Editor" dari hasil pencarian
+   - Klik "CONTINUE"
+   - Di halaman selanjutnya "Grant users access to this service account" (optional) - SKIP ini
+   - Klik "DONE"
+
+## Langkah 4: Download Credential File
+
+1. **Buka Service Account yang Baru Dibuat**
+   - Klik email service account yang baru dibuat
+   - Tab "KEYS"
+   - Klik "ADD KEY" → "Create new key"
+   - Pilih "JSON"
+   - File akan otomatis terdownload
+
+2. **Simpan File JSON**
+   - Rename file menjadi `google-credentials.json`
+   - Simpan di folder yang aman (akan digunakan di n8n)
+
+## Langkah 5: Buat Google Sheet untuk Output
+
+1. **Buat Sheet Baru**
+   - Buka Google Sheets: https://sheets.google.com
+   - Buat sheet baru
+   - Nama: "Microstock Workflow Output"
+
+2. **Setup Header Row**
+   ```
+   A1: Timestamp
+   B1: Niche  
+   C1: Konsep Visual
+   D1: Prompt ComfyUI
+   E1: Label M
+   F1: Status
+   ```
+
+3. **Share dengan Service Account**
+   - Klik tombol "Share" 
+   - Masukkan email service account (dari langkah 3)
+   - Set permission: "Editor"
+   - Hilangkan centang "Notify people"
+   - Klik "Share"
+
+4. **Copy Sheet ID**
+   - Dari URL sheet, copy bagian ini:
+   - `https://docs.google.com/spreadsheets/d/[SHEET_ID]/edit`
+   - Simpan SHEET_ID ini
+
+## 🎯 Yang Harus Anda Lakukan Sekarang:
+
+1. ✅ Ikuti langkah 1-4 untuk mendapatkan credential JSON
+2. ✅ Buat Google Sheet dengan header sesuai langkah 5
+3. ✅ Catat SHEET_ID 
+4. ✅ Konfirmasi setelah selesai
+
+**File yang perlu Anda siapkan:**
+- `google-credentials.json` (dari langkah 4)
+- Sheet ID (dari langkah 5)
+
+Setelah ini selesai, kita akan lanjut ke setup workflow di n8n!
