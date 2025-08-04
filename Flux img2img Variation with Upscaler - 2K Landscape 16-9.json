@@ -23,3 +23,16 @@
     "maxOutputTokens": 2048
   }
 }
+
+
+{
+  "contents": [{
+    "parts": [{
+      "text": "Niche: {{ $node['Webhook'].json.body.message.text }}\n\nBuat 3 konsep visual untuk microstock dengan format:\n1. Judul konsep\n2. Deskripsi visual\n3. Apakah ada manusia (ya/tidak)\n4. Prompt ComfyUI singkat"
+    }]
+  }],
+  "generationConfig": {
+    "temperature": 0.7,
+    "maxOutputTokens": 1024
+  }
+}
