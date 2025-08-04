@@ -9,3 +9,17 @@
     "maxOutputTokens": 1024
   }
 }
+
+
+
+{
+  "contents": [{
+    "parts": [{
+      "text": "{{ $node['Webhook'].json.body.message.text }}\n\nKamu adalah seorang Creative Director, Fotografer Komersial berpengalaman, dan AI Artist.\nTugasmu adalah menerjemahkan satu ide atau niche microstock menjadi konsep gambar bergaya foto yang:\n- kuat secara visual\n- memiliki nilai jual tinggi untuk pasar internasional\n- dan tidak menggunakan gaya klise atau visual yang terlalu umum\n\n🔁 Logika Jumlah Konsep Visual:\nDefault: 3 konsep visual\nJika konsep utama mengandung manusia: → Tambahkan 2 konsep tambahan non-manusia, jika relevan\nJika konsep utama tidak mengandung manusia: → Tambahkan 2 konsep tambahan dengan unsur manusia, jika relevan\n\nOutput dalam format JSON:\n{\n  \"concepts\": [\n    {\n      \"title\": \"judul konsep\",\n      \"description\": \"deskripsi visual lengkap\",\n      \"composition\": \"komposisi dan lensa\",\n      \"lighting\": \"pencahayaan dan mood\",\n      \"uniqueness\": \"elemen konseptual\",\n      \"location\": \"lokasi dan properti\",\n      \"has_human\": true/false,\n      \"comfyui_prompt\": \"prompt siap pakai untuk ComfyUI\"\n    }\n  ]\n}"
+    }]
+  }],
+  "generationConfig": {
+    "temperature": 0.7,
+    "maxOutputTokens": 2048
+  }
+}
